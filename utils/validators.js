@@ -6,27 +6,29 @@ const userSignInRules = {
 };
 
 const userSignUpRules = {
-  email: Joi.string().required().email(),
+  name: Joi.string().min(2).max(30).required(),
+  email: Joi.string().email().required(),
   password: Joi.string().required().min(8),
-  name: Joi.string().min(2).max(30).default('Жак-Ив Кусто'),
-  about: Joi.string().min(2).max(30).default('Исследователь'),
-  avatar: Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/im).default('https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png'),
 };
 
 const userDataRules = {
-  name: Joi.string().min(2).max(30).default('Жак-Ив Кусто')
-    .required(),
-  about: Joi.string().min(2).max(30).default('Исследователь')
-    .required(),
-};
-
-const userAvatarRules = {
-  avatar: Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/im).default('https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png').required(),
-};
-
-const cardRules = {
   name: Joi.string().min(2).max(30).required(),
-  link: Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/im).required(),
+  email: Joi.string().required().email(),
+};
+
+const movieRules = {
+  country: Joi.string().required(),
+  director: Joi.string().required(),
+  duration: Joi.number().required(),
+  year: Joi.string().required(),
+  description: Joi.string().required(),
+  image: Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/im).required(),
+  trailerLink: Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/im).required(),
+  thumbnail: Joi.string().regex(/^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/im).required(),
+  movieId: Joi.number().required(),
+  nameRU: Joi.string().required(),
+  nameEN: Joi.string().required(),
+
 };
 
 const objectIdRule = Joi.string().hex().length(24).required();
@@ -43,22 +45,12 @@ module.exports.userDataValidator = {
   body: Joi.object().keys(userDataRules).unknown(true),
 };
 
-module.exports.userAvatarValidator = {
-  body: Joi.object().keys(userAvatarRules).unknown(true),
+module.exports.movieValidator = {
+  body: Joi.object().keys(movieRules).unknown(true),
 };
 
-module.exports.cardValidator = {
-  body: Joi.object().keys(cardRules).unknown(true),
-};
-
-module.exports.userIdParamsValidator = {
+module.exports.movieIdParamsValidator = {
   params: Joi.object().keys({
-    userId: objectIdRule,
-  }),
-};
-
-module.exports.cardIdParamsValidator = {
-  params: Joi.object().keys({
-    cardId: objectIdRule,
+    movieId: objectIdRule,
   }),
 };

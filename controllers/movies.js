@@ -12,7 +12,6 @@ module.exports.getMovies = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  console.log(req.params.movieId);
   Movie.findOne(({ _id: req.params.movieId }))
     .orFail(() => {
       throw new NotFoundError('Карточка фильма с таким id не найден');
